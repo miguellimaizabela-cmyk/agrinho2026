@@ -1,0 +1,267 @@
+import os
+
+html_content = """
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrinho 2026 - O Amanhã Semeado Hoje</title>
+    <style>
+        :root {
+            --verde-esmeralda: #2ecc71;
+            --verde-escuro: #27ae60;
+            --amarelo-dourado: #f1c40f;
+            --marrom-terra: #7e5109;
+            --azul-rio: #3498db;
+            --branco: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--verde-escuro), var(--verde-esmeralda));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* O Caminho da Sustentabilidade (Rio Central) */
+        .river-path {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            background: var(--azul-rio);
+            transform: translateX(-50%);
+            z-index: 1;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .river-path::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0 Q 60 25 50 50 T 50 100" stroke="white" stroke-width="2" fill="none" opacity="0.3"/></svg>');
+            background-size: 80px 200px;
+            animation: flow 5s linear infinite;
+        }
+
+        @keyframes flow {
+            from { background-position: 0 0; }
+            to { background-position: 0 200px; }
+        }
+
+        .split-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .side {
+            padding: 30px;
+            border-radius: 15px;
+            min-height: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .side:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Lado Tecnologia */
+        .technology-side {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-left: 8px solid var(--amarelo-dourado);
+            text-align: right;
+        }
+
+        .technology-side h2 {
+            color: var(--marrom-terra);
+            border-bottom: 2px solid var(--amarelo-dourado);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* Lado Natureza */
+        .nature-side {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-right: 8px solid var(--verde-esmeralda);
+        }
+
+        .nature-side h2 {
+            color: var(--verde-escuro);
+            border-bottom: 2px solid var(--verde-esmeralda);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .icon-box {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        /* Callout Polinizadores */
+        .pollinator-banner {
+            background: var(--amarelo-dourado);
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 3;
+        }
+
+        .pollinator-banner span {
+            font-size: 1.5em;
+        }
+
+        /* Footer / Resposta à pergunta */
+        .answer-section {
+            background: var(--verde-escuro);
+            color: white;
+            padding: 40px;
+            margin-top: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .btn-action {
+            background: var(--amarelo-dourado);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .btn-action:hover {
+            background: #d4ac0d;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .split-view {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .river-path {
+                display: none;
+            }
+            .technology-side {
+                text-align: left;
+                border-left: 8px solid var(--amarelo-dourado);
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>O Amanhã Semeado Hoje</h1>
+        <div class="subtitle">Equilíbrio: A Engrenagem da Vida</div>
+    </header>
+
+    <div class="container">
+        <div class="river-path"></div>
+        
+        <div class="split-view">
+            <div class="side technology-side">
+                <h2>Tecnologia de Precisão</h2>
+                <div class="icon-box">🛸 🚜 ☀️</div>
+                <p>O uso de <strong>drones</strong> permite o mapeamento exato das necessidades da planta, reduzindo o desperdício.</p>
+                <p><strong>Tratores modernos</strong> otimizam o plantio direto, preservando a umidade do solo.</p>
+                <p><strong>Painéis solares</strong> garantem energia limpa para toda a produção.</p>
+            </div>
+
+            <div class="side nature-side">
+                <h2>Natureza Preservada</h2>
+                <div class="icon-box">🌳 🦌 💧</div>
+                <p>As <strong>matas ciliares</strong> protegem nossos rios, garantindo água para o futuro.</p>
+                <p>O <strong>solo rico</strong> e vivo é a base de uma colheita saudável e sustentável.</p>
+                <p>A fauna local encontra abrigo em corredores ecológicos entre as plantações.</p>
+            </div>
+        </div>
+
+        <div class="pollinator-banner">
+            <span>🐝</span> Sem polinização não há comida. Um agro forte protege os polinizadores! <span>🌻</span>
+        </div>
+
+        <section class="answer-section">
+            <h3>Como podemos produzir muito sem destruir a natureza?</h3>
+            <p>Através do equilíbrio dinâmico: usando a ciência para entender a terra e a consciência para respeitar os seus limites. A tecnologia não substitui a natureza, ela a potencializa.</p>
+            <button class="btn-action" onclick="mostrarDica()">Semeie uma Ideia</button>
+            <div id="message"></div>
+        </section>
+    </div>
+
+    <script>
+        function mostrarDica() {
+            const dicas = [
+                "O Plantio Direto evita a erosão e mantém o carbono no solo!",
+                "A Integração Lavoura-Pecuária-Floresta recupera pastagens degradadas.",
+                "A tecnologia LED e sensores reduzem o consumo de água em até 40%.",
+                "Preservar abelhas nativas aumenta a produtividade do café e da soja!",
+                "O futuro é verde esmeralda e amarelo dourado: a cor da vida e da colheita."
+            ];
+            const randomDica = dicas[Math.floor(Math.random() * dicas.length)];
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.opacity = 0;
+            setTimeout(() => {
+                messageDiv.innerText = randomDica;
+                messageDiv.style.opacity = 1;
+            }, 200);
+        }
+    </script>
+</body>
+</html>
+"""
+
+with open("agrinho_2026.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("File agrinho_2026.html generated successfully.")
